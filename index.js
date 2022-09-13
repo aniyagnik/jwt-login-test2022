@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const connectDb = require('./config/db');
 const cookieParser = require('cookie-parser');
 
-connectDb();
+connectDb(); 
 
 // middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
