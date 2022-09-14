@@ -9,7 +9,6 @@ const userVerify = require('./middleware/userVerify');
 
 connectDb(); 
 require('dotenv').config()
-console.log(process.env)
 // middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 

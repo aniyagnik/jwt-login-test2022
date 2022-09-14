@@ -32,7 +32,7 @@ const handleLogin = async (req, res) => {
         // Saving refreshToken with current user
         foundUser.refreshToken = refreshToken;
         const result = await foundUser.save();
-        console.log(result);
+        console.log("success in making new user ",result);
 
         // Creating Secure Cookie with refresh token
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: false, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
