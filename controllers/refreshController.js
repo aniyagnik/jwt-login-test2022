@@ -15,17 +15,17 @@ const handleRefreshToken = async (req, res) => {
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
-        (err, decoded) => {
+        (err, decodedUser) => {
             //checking for user
             if (err || foundUser.username !== decoded.username) return res.status(403).json({'message': err});
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
-                        "username": decoded.username,
+                        "username": decodedUser.username,
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '10s' }
+                { expiresIn: '600s' }
             );
             res.json({ accessToken })
         }

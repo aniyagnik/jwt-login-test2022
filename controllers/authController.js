@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
     console.log('req.body ',req.body)
-    const { user, password } = req.body;
-    if (!user || !password) return res.status(400).json({ 'message': 'Username and password are required.' });
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).json({ 'message': 'Username and password are required.' });
 
     // CHECKING IF USER EXISTS
-    const foundUser = await User.findOne({ username: user }).exec();
-    if (!foundUser) return res.sendStatus(401);
+    const foundUser = await User.findOne({ username: username }).exec();
+    if (!foundUser) return res.status(404).json({ 'message': 'Username not found!' });
 
     // checking passowrd
     if (password===foundUser.password) {
@@ -20,7 +20,7 @@ const handleLogin = async (req, res) => {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '30s' }
+            { expiresIn: '600s' }
         );
         const refreshToken = jwt.sign(
             { "username": foundUser.username },

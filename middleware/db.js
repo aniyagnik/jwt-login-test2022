@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mongoLink = proceess.env.DATABASE_URI
+const mongoLink = process.env.DATABASE_URI
 // connecting db
 const connectDb = async () => {
   try {

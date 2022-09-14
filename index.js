@@ -2,8 +2,10 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
-const connectDb = require('./config/db');
 const cookieParser = require('cookie-parser');
+
+const connectDb = require('./middleware/db');
+const userVerify = require('./middleware/userVerify');
 
 connectDb(); 
 
@@ -16,14 +18,20 @@ app.use(express.json());
 // middleware for cookies
 app.use(cookieParser());
 
+app.use(function (req,res,next){
+    console.log('handling request : ',req.url+" with method "+req.method);
+    next();
+})
+
 // register route
 app.use('/register', require('./routers/registerRouter'));
 // login route
 app.use('/auth', require('./routers/authRouter'));
 // refreshing accessToken through refreshToken
 app.use('/refresh', require('./routers/refreshRouter'));
-// logout
-app.use('/logout', require('./routers/logoutRouter'));
+
+// users accessing routes
+app.use('/users', userVerify, require('./routers/apis/usersRouter'));
 
 // connect mongoose and server listening on 8080
 const PORT = process.env.PORT || 8080;
