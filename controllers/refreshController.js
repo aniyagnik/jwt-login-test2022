@@ -29,7 +29,7 @@ const handleRefreshToken = async (req, res) => {
                 ACCESS_TOKEN_SECRET,
                 { expiresIn: '600s' }
             );
-            res.json({ accessToken })
+            res.status(200).json({ accessToken })
         }
     );
 }
