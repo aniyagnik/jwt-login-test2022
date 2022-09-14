@@ -14,7 +14,7 @@ const handleRefreshToken = async (req, res) => {
     // evaluating jwt 
     jwt.verify(
         refreshToken,
-        processs.env.REFRESH_TOKEN_SECRET,
+        process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
             //checking for user
             if (err || foundUser.username !== decoded.username) return res.status(403).json({'message': err});
@@ -24,7 +24,7 @@ const handleRefreshToken = async (req, res) => {
                         "username": decoded.username,
                     }
                 },
-                processs.env.ACCESS_TOKEN_SECRET,
+                process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '10s' }
             );
             res.json({ accessToken })

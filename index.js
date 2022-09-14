@@ -22,6 +22,8 @@ app.use('/register', require('./routers/registerRouter'));
 app.use('/auth', require('./routers/authRouter'));
 // refreshing accessToken through refreshToken
 app.use('/refresh', require('./routers/refreshRouter'));
+// logout
+app.use('/logout', require('./routers/logoutRouter'));
 
 // connect mongoose and server listening on 8080
 const PORT = process.env.PORT || 8080;
