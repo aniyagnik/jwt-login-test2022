@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser');
-
+const path = require("path")
 const connectDb = require('./middleware/db');
 const userVerify = require('./middleware/userVerify');
 
@@ -17,7 +17,11 @@ app.use(express.json());
 
 // middleware for cookies
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname,"build")))
 
+app.get('/*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'build','index.html'))
+})
 app.use(function (req,res,next){
     console.log('handling request : ',req.url+" with method "+req.method);
     next();

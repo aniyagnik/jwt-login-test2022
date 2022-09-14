@@ -24,17 +24,4 @@ const handleUserLogout = async (req, res) => {
   res.sendStatus(204);
 };
 
-const deleteUser = async (req, res) => {
-  console.log('in delete user')
-  // searching for user to delete in Db
-  const userToDelete = await User.findOne({ username: req.body.username }).exec();
-  console.log('user to delete ', userToDelete,!userToDelete )
-  if (!userToDelete) {
-    return res.status(204).json({ message: `User ${req.body.username} not found` });
-  }
-  // delete user
-  const result = await User.deleteOne({ username: req.body.username });
-  res.status(200).json(result);
-};
-
-module.exports = { handleUserLogout, deleteUser };
+module.exports = { handleUserLogout };
