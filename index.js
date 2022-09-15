@@ -4,11 +4,20 @@ const app = express();
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser');
 const path = require("path")
+const cors =require("cors")
 const connectDb = require('./middleware/db');
 const userVerify = require('./middleware/userVerify');
 
 connectDb(); 
 require('dotenv').config()
+app.use(cors({origin: (origin, callback) => {
+    if (["localhost:3000"].indexOf(origin) !== -1 || !origin) {
+        callback(null, true)
+    } else {
+        callback(new Error('Not allowed by CORS'));
+    }
+},
+optionsSuccessStatus: 200}))
 // middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 
