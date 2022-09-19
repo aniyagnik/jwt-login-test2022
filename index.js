@@ -10,14 +10,7 @@ const userVerify = require('./middleware/userVerify');
 
 connectDb(); 
 require('dotenv').config()
-app.use(cors({origin: (origin, callback) => {
-    if (["localhost:3000"].indexOf(origin) !== -1 || !origin) {
-        callback(null, true)
-    } else {
-        callback(new Error('Not allowed by CORS'));
-    }
-},
-optionsSuccessStatus: 200}))
+
 // middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 
@@ -31,11 +24,17 @@ app.use(express.static(path.join(__dirname,"build")))
 app.get('/*',(req,res)=>{
     res.sendFile(path.join(__dirname,'build','index.html'))
 })
+
 app.use(function (req,res,next){
     console.log('handling request : ',req.url+" with method "+req.method);
     next();
 })
-
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 // register route
 app.use('/register', require('./routers/registerRouter'));
 // login route
@@ -44,7 +43,7 @@ app.use('/auth', require('./routers/authRouter'));
 app.use('/refresh', require('./routers/refreshRouter'));
 
 // users accessing routes
-app.use('/users', userVerify, require('./routers/apis/usersRouter'));
+app.use('/users', require('./routers/apis/usersRouter'));
 
 // connect mongoose and server listening on 8080
 const PORT = process.env.PORT || 8080;
