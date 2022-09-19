@@ -19,7 +19,7 @@ const handleRefreshToken = async (req, res) => {
         REFRESH_TOKEN_SECRET,
         (err, decodedUser) => {
             //checking for user
-            if (err || foundUser.username !== decoded.username) return res.status(403).json({'message': err});
+            if (err || foundUser.username !== decodedUser.username) return res.status(403).json({'message': err});
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
