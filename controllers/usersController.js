@@ -9,10 +9,15 @@ const getAllUsers = async (req, res) => {
 
 const handleNewsApiRequest = async (req, res) => {
   console.log("in handleNewsApi");
+  const dateObj = new Date();
+  const month = dateObj.getUTCMonth() + 1; //months from 1-12
+  const day = dateObj.getUTCDate();
+  const year = dateObj.getUTCFullYear();
+  const newDate = year + "-" + month + "-" + day;
   const NEWS_URL =
     "https://newsapi.org/v2/everything?" +
     "q=Apple&" +
-    "from=2022-09-14&" +
+    `from=${newDate}&` +
     "sortBy=popularity&" +
     "apiKey=dae44bae76c94726b2514cf582225e7f";
   try {
