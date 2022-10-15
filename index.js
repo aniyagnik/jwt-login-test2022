@@ -27,7 +27,7 @@ app.use(function (req,res,next){
     next();
 })
 const corsOptions ={
-    origin:'https://internship2022-test.herokuapp.com', 
+    origin:'https://viewnews.herokuapp.com', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
